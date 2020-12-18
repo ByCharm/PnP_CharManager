@@ -1,0 +1,319 @@
+/*create database pnp;*/
+/*Database is already existing*/
+
+create or replace table FIGURE(
+    CharID int primary key,
+    Name varchar(255),
+    Gender varchar(255),
+    Age int,
+    Occupation varchar(255),
+    Height varchar(5),
+    Weight varchar(5),
+    Origin varchar(255),
+    Species varchar(255)
+);
+
+create or replace table FIGUREownsOBJECTS(
+    CharID int,
+    CharacteristicID int,
+    CharacterStatID int,
+    MiscID int,
+    InventoryID int,
+    foreign key (CharID) references FIGURE (CharID),
+    foreign key (CharacteristicID) references CHARACTERISTIC (CharacteristicID),
+    foreign key (CharacterStatID) references CHARACTER_STATS (CharacterStatID),
+    foreign key (MiscID) references MISCELLANEOUS (MiscID),
+    foreign key (InventoryID) references INVENTORY (InventoryID)
+);
+
+create or replace table CHARACTERISTIC(
+    CharacteristicID int primary key,
+    CourageBasis int,
+    CourageBonus int,
+    IntelligenceBasis int,
+    IntelligenceBonus int,
+    CharismaBasis int,
+    CharismaBonus int,
+    WillpowerBasis int,
+    WillpowerBonus int,
+    DexterityBasis int,
+    DexterityBonus int,
+    PhysicalStrengthBasis int,
+    PhysicalStrengthBonus int,
+    AgilityBasis int,
+    AgilityBonus int,
+    ConstitutionBasis int,
+    ConstitutionBonus int,
+    SpeedBasis int,
+    SpeedBonus int
+);
+
+create or replace table CHARACTER_STATS(
+    CharacterStatID int primary key,
+    PhysicalResilienceBasis int,
+    PhysicalResilienceBonus int,
+    EnduranceBasis int,
+    EnduranceBonus int,
+    MentallyResilienceBasis int,
+    MentallyResilienceBonus int,
+    InitiativeBasis int,
+    InitiativeBonus int,
+    ReachBasis int,
+    ReachBonus int,
+    LoadCapacityBasis int,
+    LoadCapacityBonus int,
+    ActualLoadCapacity int,
+    AttackBasis int,
+    AttackBonus int,
+    ParryBasis int,
+    ParryBonus int,
+    EvadeBasis int,
+    EvadeBonus int,
+    RangedCombatBasis int,
+    RangedCombatBonus int
+);
+
+create or replace table MISCELLANEOUS(
+    MiscID int primary key,
+    Money double,
+    PsionicMultiplier int
+);
+
+create or replace table FIGUREownsTALENTS(
+  CharID int,
+  FightSkillID int,
+  SpeakSkillID int,
+  IntuitiveSkillID int,
+  SocialSkillID int,
+  PhysicalSkillID int,
+  SurvivalSkillID int,
+  CraftSkillID int,
+  KnowledgeSkillID int,
+  PsionSkillID int,
+  foreign key (CharID) references FIGURE (CharID),
+  foreign key (FightSkillID) references FIGHTINGSKILL (FightSkillID),
+  foreign key (SpeakSkillID) references SPEAKINGSKILL (SpeakSkillID),
+  foreign key (IntuitiveSkillID) references INTUITIVESKILL (IntuitiveSkillID),
+  foreign key (SocialSkillID) references SOCIALSKILL (SocialSkillID),
+  foreign key (PhysicalSkillID) references PHYSICALSKILL (PhysicalSkillID),
+  foreign key (SurvivalSkillID) references SURVIVALSKILL (SurvivalSkillID),
+  foreign key (CraftSkillID) references CRAFTINGSKILL (CraftSkillID),
+  foreign key (KnowledgeSkillID) references KNOWLEDGESKILL (KnowledgeSkillID),
+  foreign key (PsionSkillID) references PSIONICSKILL (PsionSkillID)
+);
+
+create or replace table FIGHTINGSKILL(
+    FightSkillID int primary key,
+    SwordAttack int,
+    SwordParry int,
+    MaceAttack int,
+    MaceParry int,
+    AxeAttack int,
+    AxeParry int,
+    LongswordAttack int,
+    LongswordParry int,
+    LanceAttack int,
+    LanceParry int,
+    BattleStaffAttack int,
+    BattleStaffParry int,
+    ChainWeaponAttack int,
+    ChainWeaponParry int,
+    DaggerAttack int,
+    DaggerParry int,
+    FightAttack int,
+    FightParry int,
+    SelfDefenceAttack int,
+    SelfDefenceParry int,
+    AssaultRifle int,
+    Shotgun int,
+    Flamethrower int,
+    LongRifle int,
+    ExplosiveWeapon int,
+    MachineGun int,
+    ArrowWeapon int,
+    ThrowingWeapon int,
+    Shield int
+);
+
+create or replace table SPEAKINGSKILL(
+    SpeakSkillID int primary key,
+    ImperialGotisch int,
+    Tau int,
+    LinguaTechnis int,
+    BlackTongue int,
+    Eldar int,
+    Orc int
+);
+
+create or replace table INTUITIVESKILL(
+    IntuitiveSkillID int primary key,
+    Prophecy int,
+    DangerInstinct int,
+    SpiritualPerception int,
+    SenseSharpness int,
+    SelfControl int,
+    ImitatingVoice int
+);
+
+create or replace table SOCIALSKILL(
+    SocialSkillID int primary key,
+    Proselytize int,
+    Intimidation int,
+    Bewitching int,
+    Etiquette int,
+    Haggling int,
+    AlleyKnowledge int,
+    Teaching int,
+    Lying int,
+    HumanKnowledge int,
+    Disguising int,
+    Valuing int,
+    Manipulation int
+);
+
+create or replace table PHYSICALSKILL(
+    PhysicalSkillID int primary key,
+    Acrobatics int,
+    Throwing int,
+    Climbing int,
+    BodyControl int,
+    Sneaking int,
+    Riding int,
+    Swimming int,
+    Hiding int,
+    Drinking int,
+    Singing int,
+    Dancing int
+);
+
+create or replace table SURVIVALSKILL(
+    SurvivalSkillID int primary key,
+    Tracking int,
+    Taming int,
+    Noding int,
+    Hunting int,
+    Orientation int,
+    WeatherForecast int,
+    AnimalUnderstanding int,
+    Herbalism int,
+    Fishing int,
+    Camping int
+);
+
+create or replace table CRAFTINGSKILL(
+    CraftSkillID int primary key,
+    AirplanesSteering int,
+    BattleSuitsSteering int,
+    LightVehiclesSteering int,
+    HeavyVehiclesSteering int,
+    SpaceshipsSteering int,
+    BoatsSteering int,
+    Tattoing int,
+    Agriculture int,
+    Woodworking int,
+    Cooking int,
+    Leatherworking int,
+    Painting int,
+    Tailoring int,
+    PocketSkill int,
+    ArmorSmithing int,
+    WeaponSmithing int,
+    StoneProcessing int,
+    GlassProcessing int,
+    PrecisionMechanics int,
+    Pottery int,
+    LockCrackingSkill int,
+    Musician int,
+    ElektronicSkills int,
+    MechanicSkills int
+);
+
+create or replace table KNOWLEDGESKILL(
+    KnowledgeSkillID int primary key,
+    Chemistry int,
+    Medicine int,
+    Geography int,
+    History int,
+    Theology int,
+    PsionicTeaching int,
+    WarTactics int,
+    EngineeringKnowledge int,
+    Mathematics int,
+    Jurisprudence int,
+    CivicStudies int,
+    Astronomy int,
+    HumanoidBiology int,
+    XenoBiology int,
+    Economics int,
+    Physics int,
+    Psychology int,
+    Philosophy int
+);
+
+create or replace table PSIONICSKILL(
+    PsionSkillID int primary key,
+    Biomancy int,
+    Divination int,
+    Pyromancy int,
+    Telekinesis int,
+    Telepathy int
+);
+
+create or replace table INVENTORY(
+    InventoryID int primary key,
+    Name varchar(255),
+    Count int,
+    Weight double,
+    Description varchar(255)
+);
+
+create or replace table INVENTORYownsOBJECTS(
+    InventoryID int,
+    MeleeID int,
+    RangeID int,
+    ArmorID int,
+    ClothingID int,
+    foreign key (InventoryID) references INVENTORY (InventoryID),
+    foreign key (MeleeID) references MELEEWEAPON (MeleeID),
+    foreign key (RangeID) references RANGEWEAPON (RangeID),
+    foreign key (ArmorID) references ARMOR (ArmorID),
+    foreign key (ClothingID) references CLOTHING (ClothingID)
+);
+
+create or replace table MELEEWEAPON(
+    MeleeID int primary key,
+    Name varchar(255),
+    FractureFactor int,
+    WeaponModification varchar(255),
+    TakenDamage int,
+    Initiative int,
+    Weight double,
+    Tier int
+);
+
+create or replace table RANGEWEAPON(
+    RangeID int primary key,
+    Name varchar(255),
+    Reach double,
+    FireRate int,
+    LoadingCapacity int,
+    TakenDamage int,
+    Initiative int,
+    Weight double,
+    ReloadTime int,
+    Tier int
+);
+
+create or replace table ARMOR(
+    ArmorID int primary key,
+    Name varchar(255),
+    TakenDamage int,
+    Weight double,
+    Tier int,
+    Category varchar(255)
+);
+
+create or replace table CLOTHING(
+    ClothingID int primary key,
+    Name varchar(255)
+);
