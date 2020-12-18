@@ -10,7 +10,7 @@ public class SQL_Stmt extends PnP_GUI {
     }
 
     public void fillCharComboBox() {
-        try(Connection DBConn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/pnp", "root", "tD87Byh13g")){
+        try(Connection DBConn = DriverManager.getConnection(url, user, password)){
             //create sql stmt
             Statement stmt = DBConn.createStatement();
             //execute sql stmt
