@@ -1,0 +1,328 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
+public class PnP_GUI {
+
+    private final JFrame myFrame;
+    private final JPanel  MainPanel, BioPanel, PicturePanel, OverviewPanel, TalentPanel;
+    private final Dimension Dim;
+    private final JMenuBar MenuBar;
+    private final JMenu Menu;
+    private final JMenuItem Verbinden, Trennen, Wuerfelgenerator, Schließen;
+    private final JTable NameTable, GenderTable, AgeTable, OccupationTable, HeightTable, WeightTable, OriginTable,
+            SpeciesTable,CourageTable, IntelligenceTable, CharismaTable, IntuitionTable, WillpowerTable, DexterityTable,
+            PhysicalStrengthTable, AgilityTable, ConstitutionTable, SpeedTable, PhysicalResilienceTable, EnduranceTable,
+            MentallyResilienceTable, InitiativeTable, ReachTable, LoadCapacityTable, AttackTable, ParryTable,
+            EvadeTable, RangedCombatTable, MentallyPotentialTable, PhysicallyPotentialTable, CombinedPotentialTable,
+            MoneyTable, PsiTable, AdventureRankTable, CurrentAdventureEXPTable, AdventureLvlUpTable;
+    private final JLabel CharLabel, TalentLabel, BasisLabel, CharacteristicLabel, CapabilityLabel, AdventureRankLabel,
+            MiscLabel, Talents;
+    private final JComboBox CharBox;
+    private final JComboBox<String> TalentBox;
+    private final JButton testButton;
+
+    public PnP_GUI(){
+        //creating JFrame
+        myFrame = new JFrame("PnP_CharManager");
+
+        //creating Menu Components
+        MenuBar = new JMenuBar();
+        MenuBar.setSize(900, 25);
+        Menu = new JMenu("Menu");
+        Verbinden = new JMenuItem("Verbinden");
+        Trennen = new JMenuItem("Trennen");
+        Wuerfelgenerator = new JMenuItem("Wuerfelgenerator");
+        Schließen = new JMenuItem("Schließen");
+        Menu.add(Verbinden); Menu.add(Trennen); Menu.add(Wuerfelgenerator); Menu.add(Schließen);
+        MenuBar.add(Menu);
+
+        //creating JPanel components
+        MainPanel = new JPanel();
+
+        BioPanel = new JPanel();
+        PnP_GUI_Components.createJPanelComponents(BioPanel, 430, 160, 20, 40, Color.GRAY);
+
+        PicturePanel = new JPanel();
+        PnP_GUI_Components.createJPanelComponents(PicturePanel, 130, 160, 460, 40, Color.BLACK);
+
+        OverviewPanel = new JPanel();
+        PnP_GUI_Components.createJPanelComponents(OverviewPanel, 760, 350, 20, 210, Color.GRAY);
+
+        TalentPanel = new JPanel();
+        PnP_GUI_Components.createJPanelComponents(TalentPanel, 760, 315, 20, 570, Color.GRAY);
+
+        //creating JTable components
+        NameTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(NameTable, 200, 15, 30, 50, "Name:", 0, 0);
+
+        GenderTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(GenderTable, 200, 15, 30, 90, "Geschlecht:", 0, 0);
+
+        AgeTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(AgeTable, 200, 15, 30, 130, "Alter:", 0, 0);
+
+        OccupationTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(OccupationTable, 200, 15, 30, 170, "Beruf:", 0, 0);
+
+        HeightTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(HeightTable, 200, 15, 240, 50, "Groesse:", 0, 0);
+
+        WeightTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(WeightTable, 200, 15, 240, 90, "Gewicht:", 0, 0);
+
+        OriginTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(OriginTable, 200, 15, 240, 130, "Herkunft:", 0, 0);
+
+        SpeciesTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(SpeciesTable, 200, 15, 240, 170, "Spezies:", 0, 0);
+
+        CourageTable = new JTable(1, 4);
+        PnP_GUI_Components.createJTableComponents(CourageTable, 200, 15, 30, 240, "Mut:", 0, 0);
+
+        IntelligenceTable = new JTable(1, 4);
+        PnP_GUI_Components.createJTableComponents(IntelligenceTable, 200, 15, 30, 260, "Intelligenz:", 0, 0);
+
+        CharismaTable = new JTable(1, 4);
+        PnP_GUI_Components.createJTableComponents(CharismaTable, 200, 15, 30, 280, "Charisma:", 0, 0);
+
+        IntuitionTable = new JTable(1, 4);
+        PnP_GUI_Components.createJTableComponents(IntuitionTable, 200, 15, 30, 300, "Intuition:", 0, 0);
+
+        WillpowerTable = new JTable(1, 4);
+        PnP_GUI_Components.createJTableComponents(WillpowerTable, 200, 15, 30, 320, "Willenskraft:", 0, 0);
+
+        DexterityTable = new JTable(1, 4);
+        PnP_GUI_Components.createJTableComponents(DexterityTable, 200, 15, 30, 340, "Fingerfertigkeit:", 0, 0);
+
+        PhysicalStrengthTable = new JTable(1, 4);
+        PnP_GUI_Components.createJTableComponents(PhysicalStrengthTable, 200, 15, 30, 360, "Koerperkraft:", 0, 0);
+
+        AgilityTable = new JTable(1, 4);
+        PnP_GUI_Components.createJTableComponents(AgilityTable, 200, 15, 30, 380, "Gewandtheit:", 0, 0);
+
+        ConstitutionTable = new JTable(1, 4);
+        PnP_GUI_Components.createJTableComponents(ConstitutionTable, 200, 15, 30, 400, "Konstitution:", 0, 0);
+
+        SpeedTable = new JTable(1, 4);
+        PnP_GUI_Components.createJTableComponents(SpeedTable, 200, 15, 30, 420, "Geschwindigkeit:", 0, 0);
+
+        PhysicalResilienceTable = new JTable(1,4);
+        PnP_GUI_Components.createJTableComponents(PhysicalResilienceTable, 200, 15, 250, 240, "Phy. Belastbarkeit:", 0, 0);
+
+        EnduranceTable = new JTable(1,4);
+        PnP_GUI_Components.createJTableComponents(EnduranceTable, 200, 15, 250, 260, "Ausdauer:", 0, 0);
+
+        MentallyResilienceTable = new JTable(1,4);
+        PnP_GUI_Components.createJTableComponents(MentallyResilienceTable, 200, 15, 250, 280, "Psy. Belastbarkeit:", 0, 0);
+
+        InitiativeTable = new JTable(1,4);
+        PnP_GUI_Components.createJTableComponents(InitiativeTable, 200, 15, 250, 300, "Initiative:", 0, 0);
+
+        ReachTable = new JTable(1,4);
+        PnP_GUI_Components.createJTableComponents(ReachTable, 200, 15, 250, 320, "Reichweite:", 0, 0);
+
+        LoadCapacityTable = new JTable(1,4);
+        PnP_GUI_Components.createJTableComponents(LoadCapacityTable, 200, 15, 250, 340, "Traglast:", 0, 0);
+
+        AttackTable = new JTable(1,4);
+        PnP_GUI_Components.createJTableComponents(AttackTable, 200, 15, 250, 360, "At-Basis:", 0, 0);
+
+        ParryTable = new JTable(1,4);
+        PnP_GUI_Components.createJTableComponents(ParryTable, 200, 15, 250, 380, "Pa-Basis:", 0, 0);
+
+        EvadeTable = new JTable(1,4);
+        PnP_GUI_Components.createJTableComponents(EvadeTable, 200, 15, 250, 400, "Ausweichen:", 0, 0);
+
+        RangedCombatTable = new JTable(1,4);
+        PnP_GUI_Components.createJTableComponents(RangedCombatTable, 200, 15, 250, 420, "FeK-Basis:", 0, 0);
+
+        MentallyPotentialTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(MentallyPotentialTable,150,15,470, 240, "Geistiges Potential:", 0, 0);
+
+        PhysicallyPotentialTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(PhysicallyPotentialTable,150,15,470,260, "Koerperliches Potential:",0, 0);
+
+        CombinedPotentialTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(CombinedPotentialTable, 150, 15, 470, 280, "Kombiniertes Potential:",0, 0);
+
+        MoneyTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(MoneyTable, 150, 15, 470, 340, "Geld:",0, 0);
+
+        PsiTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(PsiTable, 150, 15, 470, 360, "Psifaktor:",0, 0);
+
+        AdventureRankTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(AdventureRankTable, 150, 15, 470, 420, "Level:",0, 0);
+
+        CurrentAdventureEXPTable = new JTable(1,2);
+        PnP_GUI_Components.createJTableComponents(CurrentAdventureEXPTable, 150, 15, 470, 440, "Akt. Exp:",0, 0);
+
+        AdventureLvlUpTable = new JTable(1, 2);
+        PnP_GUI_Components.createJTableComponents(AdventureLvlUpTable, 150, 15, 470, 460, "Lvl up in:",0, 0);
+
+        //creating JLabel components
+        CharLabel = new JLabel("Charakterauswahl:");
+        PnP_GUI_Components.createJLabelComponents(CharLabel, 110, 15, 595, 40);
+
+        TalentLabel = new JLabel("Talentauswahl:");
+        PnP_GUI_Components.createJLabelComponents(TalentLabel, 110, 15, 40, 595);
+
+        BasisLabel = new JLabel("Grundwerte:");
+        PnP_GUI_Components.createJLabelComponents(BasisLabel, 110, 15, 30, 220);
+
+        CharacteristicLabel = new JLabel("Eigenschaften:");
+        PnP_GUI_Components.createJLabelComponents(CharacteristicLabel, 110, 15, 250, 220);
+
+        CapabilityLabel = new JLabel("Potential:");
+        PnP_GUI_Components.createJLabelComponents(CapabilityLabel,110, 15, 470, 220);
+
+        AdventureRankLabel = new JLabel("Abenteuerpunkte:");
+        PnP_GUI_Components.createJLabelComponents(AdventureRankLabel, 110, 15, 470, 400);
+
+        MiscLabel = new JLabel("Sonstiges:");
+        PnP_GUI_Components.createJLabelComponents(MiscLabel, 110, 15,470, 320);
+
+        Talents = new JLabel("Talente:");
+        PnP_GUI_Components.createJLabelComponents(Talents,110, 15, 250, 595);
+
+        //creating JComboBox
+        CharBox = new JComboBox();
+        PnP_GUI_Components.createJComboBoxComponents(CharBox, 150, 20, 595, 60, true);
+        CharBox.addItem("Neuer Charakter");
+
+        TalentBox = new JComboBox<>();
+        PnP_GUI_Components.createJComboBoxComponents(TalentBox, 150, 20, 40, 615, true);
+        TalentBox.addItem("Kampftalente"); TalentBox.addItem("Sprachtalente"); TalentBox.addItem("Intuitive Talente");
+        TalentBox.addItem("Gesellschaftstalente"); TalentBox.addItem("Koerperliche Talente");
+        TalentBox.addItem("Ueberlebenstalente"); TalentBox.addItem("Handwerkstalente"); TalentBox.addItem("Wissenstalente");
+        TalentBox.addItem("Psyonische Talente");
+
+        //creating JButtons
+        testButton = new JButton();
+        PnP_GUI_Components.createJButtonComponents(testButton, 100, 20, 595, 120, "test");
+        testButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Der Button meldet sich");
+                SQL_Stmt myStmt = new SQL_Stmt();
+
+            }
+        });
+
+        //adding JObjects to myFrame
+        myFrame.add(MenuBar);
+
+        myFrame.add(CharLabel); myFrame.add(TalentLabel); myFrame.add(BasisLabel); myFrame.add(CharacteristicLabel);
+        myFrame.add(CapabilityLabel); myFrame.add(AdventureRankLabel); myFrame.add(MiscLabel); myFrame.add(Talents);
+
+        myFrame.add(CharBox); myFrame.add(TalentBox);
+
+        myFrame.add(testButton);
+
+        myFrame.add(NameTable); myFrame.add(GenderTable); myFrame.add(AgeTable); myFrame.add(OccupationTable);
+        myFrame.add(HeightTable); myFrame.add(WeightTable); myFrame.add(OriginTable); myFrame.add(SpeciesTable);
+        myFrame.add(CourageTable); myFrame.add(IntelligenceTable); myFrame.add(CharismaTable); myFrame.add(IntuitionTable);
+        myFrame.add(WillpowerTable); myFrame.add(DexterityTable); myFrame.add(PhysicalStrengthTable); myFrame.add(AgilityTable);
+        myFrame.add(ConstitutionTable); myFrame.add(SpeedTable); myFrame.add(PhysicalResilienceTable);
+        myFrame.add(EnduranceTable); myFrame.add(MentallyResilienceTable); myFrame.add(InitiativeTable);
+        myFrame.add(ReachTable); myFrame.add(LoadCapacityTable); myFrame.add(AttackTable); myFrame.add(ParryTable);
+        myFrame.add(EvadeTable); myFrame.add(RangedCombatTable); myFrame.add(MentallyPotentialTable);
+        myFrame.add(PhysicallyPotentialTable); myFrame.add(CombinedPotentialTable); myFrame.add(MoneyTable);
+        myFrame.add(PsiTable); myFrame.add(AdventureRankTable); myFrame.add(CurrentAdventureEXPTable);
+        myFrame.add(AdventureLvlUpTable);
+
+        myFrame.add(BioPanel); myFrame.add(PicturePanel);
+        myFrame.add(OverviewPanel); myFrame.add(TalentPanel);
+        myFrame.add(MainPanel);
+
+        Dim = new Dimension(800,900);
+        myFrame.getContentPane().setPreferredSize(Dim);
+        myFrame.setLocationRelativeTo(null);
+        myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        myFrame.pack();
+        myFrame.setVisible(true);
+    }
+
+    public JTable getNameTable() { return NameTable;}
+
+    public JTable getGenderTable() { return GenderTable;}
+
+    public JTable getAgeTable() { return AgeTable;}
+
+    public JTable getOccupationTable() { return OccupationTable;}
+
+    public JTable getHeightTable() { return HeightTable;}
+
+    public JTable getWeightTable() { return WeightTable;}
+
+    public JTable getOriginTable() { return OriginTable;}
+
+    public JTable getSpeciesTable() { return SpeciesTable;}
+
+    public JTable getCourageTable() { return CourageTable;}
+
+    public JTable getIntelligenceTable() { return IntelligenceTable;}
+
+    public JTable getCharismaTable() { return CharismaTable;}
+
+    public JTable getIntuitionTable() { return IntuitionTable;}
+
+    public JTable getWillpowerTable() { return WillpowerTable;}
+
+    public JTable getDexterityTable() { return DexterityTable;}
+
+    public JTable getPhysicalStrengthTable() { return PhysicalStrengthTable;}
+
+    public JTable getAgilityTable() { return AgilityTable;}
+
+    public JTable getConstitutionTable() { return ConstitutionTable;}
+
+    public JTable getSpeedTable() { return SpeedTable;}
+
+    public JTable getPhysicalResilienceTable() { return PhysicalResilienceTable;}
+
+    public JTable getEnduranceTable() { return EnduranceTable;}
+
+    public JTable getMentallyResilienceTable() { return MentallyResilienceTable;}
+
+    public JTable getInitiativeTable() { return InitiativeTable;}
+
+    public JTable getReachTable() { return ReachTable;}
+
+    public JTable getLoadCapacityTable() { return LoadCapacityTable;}
+
+    public JTable getAttackTable() { return AttackTable;}
+
+    public JTable getParryTable() { return ParryTable;}
+
+    public JTable getEvadeTable() { return EvadeTable;}
+
+    public JTable getRangedCombatTable() { return RangedCombatTable;}
+
+    public JTable getMentallyPotentialTable() { return MentallyPotentialTable;}
+
+    public JTable getPhysicallyPotentialTable() { return PhysicallyPotentialTable;}
+
+    public JTable getCombinedPotentialTable() { return CombinedPotentialTable;}
+
+    public JTable getMoneyTable() { return MoneyTable;}
+
+    public JTable getPsiTable() { return PsiTable;}
+
+    public JTable getAdventureRankTable() { return AdventureRankTable;}
+
+    public JTable getCurrentAdventureEXPTable() { return CurrentAdventureEXPTable;}
+
+    public JTable getAdventureLvlUpTable() { return AdventureLvlUpTable;}
+
+    public JComboBox getCharBox() {return CharBox;}
+
+    public JComboBox getTalentBox() { return TalentBox;}
+
+    public static void main(String[] args) throws SQLException {
+    new PnP_GUI();
+
+    }
+}
