@@ -3,7 +3,7 @@
 
 create or replace table FIGURE(
     CharID int primary key,
-    Name varchar(255),
+    CharName varchar(255),
     Gender varchar(255),
     Age int,
     Occupation varchar(255),
